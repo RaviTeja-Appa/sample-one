@@ -1,0 +1,9 @@
+
+
+<h1>Create Board Mr. {{ user }}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Board</button>
+</form>
+

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    {% load static %} 
+    <link rel="stylesheet" href="{% static "css/imagehome.css"%}">
+  </head>
+  <body>
+    <h1>Welcome to the Home Page!</h1>
+    <div class="container">
+      {% for image in images %}
+      <div class="box">
+        {% comment %}
+        <p>{{ image.image_Post.url }}</p>
+        {% endcomment %}
+        <a href="{% url 'post_detail' image.pk %}">
+          <img src="{{ image.image_Post.url }}" alt="{{ image.title }}" />
+        </a>
+      </div>
+      
+      {% endfor %}
+    </div>
+  </body>
+</html>

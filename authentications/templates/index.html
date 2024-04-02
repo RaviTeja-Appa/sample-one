@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinterest-India</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/index.css" %}">
+    <link rel="icon" href="{% static "/img/favicon.ico" %}" type="image/x-icon" />
+     </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-..."
+      crossorigin="anonymous"
+    />
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"
+      integrity="sha512-..."
+      crossorigin="anonymous"
+    ></script>
+    
+</head>
+<body>
+        <header>
+        <!-- Nav bar setup -->
+        <ul class="pages" id="nextPages">
+          <li>
+            <a href="index.html" class="home-btn">
+              <img
+                src="{% static "img/Pinterest_Favicon.webp" %}"
+                alt=""
+                width="32px"
+                height="32px"
+                style="border-radius: 50%"
+              />
+              <h2>Pinterest</h2>
+            </a>
+          </li>
+          <li>Today</li>
+          <li>Watch</li>
+          <li>Explore</li>
+        </ul>
+          <ul class="second-Nav">
+            <li>About</li>
+            <li>Business</li>
+            <li>Blog</li>
+            <li><button id="login" class='login'>Log in</button></li>
+            <li><button class="signup" onclick='toggleForm()'>Sign up</button></li>
+          </ul>
+      
+    </header>
+    {% comment %} This is for login page popup {% endcomment %}
+    
+    
+    <div id="loginoverlay" class="loginoverlay" >
+      <div class="container">
+        <img
+                src="{% static "img/Pinterest_Favicon.webp" %}"
+                alt=""
+                width="40px"
+                height="40px"
+                style="border-radius: 50%; margin:20px 0px 10px 50px; justify-self:center;"
+              />
+        <span class="cross"><button  type="button" value="X" id="cutting-login">X</button></span>
+        
+        <form method="post" id='loginform' action='{% url "user_login" %}'>
+          {% csrf_token %}
+          {% if login_error_message %}
+          <p>{{ login_error_message }}</p>
+
+          {% endif %}
+          <label for="username">Email:</label>
+          <input type="text" id="username" name="username" required /><br />
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required /><br />
+          <button type="submit" id='loginButton'>Log in</button>
+
+        </form>
+      </div>
+    </div>  
+
+   
+
+    {% comment %} the sign Up page details {% endcomment %}
+    
+    
+    <div id="overlay" class="overlay">
+      <div class="container">
+          <img
+                src="{% static "img/Pinterest_Favicon.webp" %}"
+                alt=""
+                width="40px"
+                height="40px"
+                style="border-radius: 50%; margin:20px 0px 10px 50px; justify-self:center;"
+              />
+        <span class="cross"><button  type="button" value="X" id="cutting">X</button></span>
+
+        <form id="registrationForm" method="post">
+          {% csrf_token %}
+          <h1>Welcome to Pinterest</h2>
+          <h3>Find new ideas to try</h5>
+          <label for="id_email">Email:</label>
+          {{ form.email }} {% if form.errors.email %}
+          <div class="error-message">{{ form.errors.email }}</div>
+          {% endif %}
+          <label for="id_username">Username:</label>
+          {{ form.username }} {% if form.errors.username %}
+          <div class="error-message">{{ form.errors.username }}</div>
+          {% endif %}
+          <label for="id_password">Password:</label>
+          {{ form.password }} {% if form.errors.password %}
+          <div class="error-message">{{ form.errors.password }}</div>
+          {% endif %}
+          <label for="id_date_of_birth">Birthdate</label>
+          {{ form.date_of_birth }} {% if form.errors.date_of_birth %}
+          <div class="error-message">{{ form.errors.date_of_birth }}</div>
+          {% endif %}
+          <br>
+          <button type="submit"  id="signupButton">
+            Continue
+          </button>
+          
+        </form>
+      </div>
+    </div>
+
+    
+
+    <section>
+        <div class="Getnext"> Get your next</div>
+        <!-- courosel content creation -->
+        <div class="main_set">
+      <!-- Radio buttons for slides -->
+      <div class="radios">
+        <input type="radio" name="slide" id="radio1" checked />
+        <input type="radio" name="slide" id="radio2" />
+        <input type="radio" name="slide" id="radio3" />
+        <input type="radio" name="slide" id="radio4" />
+      </div>
+
+      <!-- Carousel container with slides -->
+      <div class="carousel-container">
+        <div class="carousel-slide active" id="slide1">
+          <!-- First Page Data -->
+          <div class="main1">
+            <!-- <div class="box"></div> -->
+            <div class="content content-slide1">chai time snacks idea</div>
+            <div
+              class="img"
+              style="
+                animation: images-slide-up 5s ease-in-out infinite;
+                animation-delay: 0.1s;
+              "
+              id="img1"
+            >
+              <img src="{% static "img/slide1-img1.jpg" %}" alt="" />
+            </div>
+            <div
+              class="img"
+              style="
+                animation: images-slide-up 5s ease-in-out infinite;
+                animation-delay: 0.15s;
+              "
+              id="img2"
+            >
+              <img src="{% static "img/slide1-img2.jpg" %}" alt="" />
+            </div>
+            <div
+              class="img"
+              style="
+                animation: images-slide-up 5s ease-in-out infinite;
+                animation-delay: 0.2s;
+              "
+              id="img3"
+            >
+              <img src="{% static "img/slide1-img3.jpg" %}" alt="" />
+            </div>
+            <div
+              class="img"
+              style="
+                animation: images-slide-up 5s ease-in-out infinite;
+                animation-delay: 0.25s;
+              "
+              id="img4"
+            >
+              <img src="{% static "img/slide1-img4.jpg" %}" alt="" />
+            </div>
+            <div
+              class="img"
+              style="
+                animation: images-slide-up 5s ease-in-out infinite;
+                animation-delay: 0.3s;
+              "
+              id="img5"
+            >
+              <img src="{% static "img/slide1-img5.jpg" %}" alt="" />
+            </div>
+            <div
+              class="img"
+              style="
+                animation: images-slide-up 5s ease-in-out infinite;
+                animation-delay: 0.35s;
+              "
+              id="img6"
+            >
+              <img src="{% static "img/slide1-img6.jpg" %}" alt="" />
+            </div>
+            <div
+              class="img"
+              style="
+                animation: images-slide-up 5s ease-in-out infinite;
+                animation-delay: 0.4s;
+              "
+              id="img7"
+            >
+              <img src="{% static "img/slide1-img7.jpg" %}" alt="" />
+            </div>
+            <div
+              class="img"
+              id="img8"
+              style="
+                animation: images-slide-up 5s ease-in-out infinite;
+                animation-delay: 0.45s;
+              "
+            >
+              <img src="{% static "img/slide1-img8.jpg" %}" alt="" />
+            </div>
+            <div
+              class="img"
+              id="img9"
+              style="
+                animation: images-slide-up 5s ease-in-out infinite;
+                animation-delay: 0.5s;
+              "
+            >
+              <img src="{% static "img/slide1-img9.jpg" %}" alt="" />
+            </div>
+            <div
+              class="img"
+              id="img10"
+              style="
+                animation: images-slide-up 5s ease-in-out infinite;
+                animation-delay: 0.55s;
+              "
+            >
+              <img src="{% static "img/slide1-img10.jpg" %}" alt="" />
+            </div>
+            <div
+              class="img"
+              id="img11"
+              style="
+                animation: images-slide-up 5s ease-in-out infinite;
+                animation-delay: 0.6s;
+              "
+            >
+              <img src="{% static "img/slide1-img11.jpg" %}" alt="" />
+            </div>
+          </div>
+          <div class="floating-icon" id="floater">
+            <a href="#searchIdea" class="slide1-bouncer"
+              ><i class="fas fa-angle-down"></i
+            ></a>
+          </div>
+        </div>
+
+        <div
+          class="carousel-slide"
+          id="slide2"
+        >
+          <div class="main1">
+            <!-- <div class="box"></div> -->
+            <div class="content content-slide2">home decor idea</div>
+            <div class="img"  id="img1">
+              <img src="{% static "img/slide2-img1.jpg" %}" alt="">
+            </div>
+            <div class="img"  id="img2">
+              <img src="{% static "img/slide2-img2.jpg" %}" alt="">
+            </div>
+            <div class="img"  id="img3">
+              <img src="{% static "img/slide2-img3.jpg" %}" alt="">
+            </div>
+            <div class="img"  id="img4">
+              <img src="{% static "img/slide2-img4.jpg" %}" alt="">
+            </div>
+            <div
+              class="img"
+              
+              id="img5"
+            >
+            <img src="{% static "img/slide2-img5.jpg" %}" alt="">
+          </div>
+            <div class="img"  id="img6">
+              <img src="{% static "img/slide2-img6.jpg" %}" alt="">
+            </div>
+
+            <div
+              class="img"
+              
+              id="img7"
+            >
+            <img src="{% static "img/slide2-img7.jpg" %}" alt="">
+          </div>
+            <div class="img" id="img8" >
+              <img src="{% static "img/slide2-img8.jpg" %}" alt="">
+            </div>
+            <div
+              class="img"
+              id="img9"
+              
+            >
+            <img src="{% static "img/slide2-img9.jpg" %}" alt="">
+          </div>
+            <div class="img" id="img10" >
+              <img src="{% static "img/slide2-img10.jpg" %}" alt="">
+            </div>
+            <div class="img" id="img11" >
+              <img src="{% static "img/slide2-img11.jpg" %}" alt="">
+            </div>
+          </div>
+          <div class="floating-icon" id="floater">
+            <a href="#searchIdea" class="slide2-bouncer"
+              ><i class="fas fa-angle-down"></i
+            ></a>
+          </div>
+        </div>
+        <div class="carousel-slide" id="slide3">
+          <div class="main1">
+            <!-- <div class="box"></div> -->
+            <div class="content content-slide3">outfit idea</div>
+            <div class="img" id="img1">
+              <img src="https://i.pinimg.com/236x/55/67/db/5567db7d45ec64efefa5a509cc401672.jpg" alt="">
+            </div>
+            <div class="img" id="img2">
+              <img src="https://i.pinimg.com/236x/3f/66/1a/3f661ac5a74613cb55d7532ff800200c.jpg" alt="">
+            </div>
+            <div class="img"  id="img3">
+              <img src="https://i.pinimg.com/236x/0d/a8/08/0da80865a24003bd3677fcca866bf5f3.jpg" alt="">
+            </div>
+            <div class="img"  id="img4">
+              <img src="https://i.pinimg.com/236x/0c/4f/e2/0c4fe2feb8005ffc3225a9f50b9a9a94.jpg" alt="">
+            </div>
+            <div
+              class="img"
+              
+              id="img5"
+            >
+            <img src="https://i.pinimg.com/236x/99/73/ca/9973caa43ba01ed02a4e51d5af709358.jpg" alt="">
+          </div>
+            <div class="img"  id="img6">
+              <img src="https://i.pinimg.com/236x/85/e8/ec/85e8ec5a1e08fff8a5d6a61b67ab0bdf.jpg" alt="">
+            </div>
+            <div
+              class="img"
+              
+              id="img7"
+            >
+            <img src="https://i.pinimg.com/236x/69/a1/7f/69a17fbe6b7c09cec47ac39e7189fd6a.jpg" alt="">
+          </div>
+            <div class="img" id="img8" >
+              <img src="https://i.pinimg.com/236x/f5/42/f9/f542f9052b3d8ab96a1b362a7283fc81.jpg" alt="">
+            </div>
+            <div
+              class="img"
+              id="img9"
+              
+            >
+            <img src="https://i.pinimg.com/236x/19/6c/33/196c3318c12e25f83d6d3b71e9cb7c3b.jpg" alt="">
+          </div>
+            <div class="img" id="img10" >
+              <img src="https://i.pinimg.com/236x/d7/34/ab/d734abaf060309101f6d5d8beaf42d7d.jpg" alt="">
+            </div>
+            <div class="img" id="img11" >
+              <img src="https://i.pinimg.com/236x/1f/60/a6/1f60a67fa5aff3c9be3598c8a4fc7645.jpg" alt="">
+            </div>
+          </div>
+          <div class="floating-icon" id="floater">
+            <a href="#searchIdea" class="slide3-bouncer"
+              ><i class="fas fa-angle-down"></i
+            ></a>
+          </div>
+        </div>
+        <div class="carousel-slide" id="slide4">
+          <div class="main1">
+            <!-- <div class="box"></div> -->
+            <div class="content content-slide4">DIY idea</div>
+            <div class="img"  id="img1"><img src="https://i.pinimg.com/550x/43/af/6f/43af6f5aa4df62b5bc7748e40f46f4c4.jpg" alt=""></div>
+            <div class="img"  id="img2"><img src="https://i.pinimg.com/550x/f7/98/06/f79806847fa0b6953a00b2cd4ee81608.jpg" alt=""></div>
+            <div class="img"   id="img3"><img src="https://i.pinimg.com/550x/c2/5e/31/c25e3114ebf041852be0292200727e92.jpg" alt=""></div>
+            <div class="img"  id="img4"><img src="https://i.pinimg.com/550x/c2/5e/31/c25e3114ebf041852be0292200727e92.jpg" alt=""></div>
+            <div
+              class="img"
+              
+              id="img5"
+            >
+            <img src="https://i.pinimg.com/550x/2f/eb/0d/2feb0d13f24b8474915d732b071d0123.jpg" alt="">
+          </div>
+            <div class="img"  id="img6">
+            <img src="https://i.pinimg.com/550x/d6/42/0c/d6420cbda792a30c24efe408b429e142.jpg" alt=""></div>
+            <div
+              class="img"
+              
+              id="img7"
+            >
+            <img src="https://i.pinimg.com/550x/0d/23/fc/0d23fce641c9fc328f5489547dddc59a.jpg" alt="">
+          </div>
+            <div class="img" id="img8"  > <img src="https://i.pinimg.com/550x/06/b0/32/06b03221168c54665fcd279149e4dd77.jpg" alt=""></div>
+            <div
+              class="img"
+              id="img9"
+              
+            >
+            <img src="https://i.pinimg.com/550x/e3/98/64/e39864d6997b736878c07ae6db81b465.jpg" alt="">
+          </div>
+            <div class="img" id="img10"  ><img src="https://i.pinimg.com/550x/9d/dd/50/9ddd50ff3f173ef56a61a7277b50dcbd.jpg" alt=""></div>
+            <div class="img" id="img11"  ><img src="https://i.pinimg.com/550x/62/ea/90/62ea9021f496141d4994a0e43d509142.jpg" alt=""></div>
+          </div>
+          <div class="floating-icon" id="floater">
+            <a href="#searchIdea" class="slide4-bouncer"
+              ><i class="fas fa-angle-down"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="disclaimer" id="disclaimer" >
+      <a href="#searchIdea">Here's how it works <i class="fas fa-angle-down"></i
+            > </a>
+    </div>
+    </section>
+    <article>
+      <div class="search_for_an_idea" id="searchIdea" >
+        <div class="easychickendinner">
+          <div class="left"><img src="https://s.pinimg.com/webapp/left-ccce7532.png" alt=""></div>
+          <div  class="center"> <img src="https://s.pinimg.com/webapp/center-2d76a691.png" alt=""></div>
+          <div style="background-color: #fff;borde-radius:50px; " class="searchshow"><i class="fa fa-search" aria-hidden="true" id="searchicon" style="color: black; margin-right: 3px;"></i> easy chicken dinner</div>
+          <div  class="topright"><img src="https://s.pinimg.com/webapp/topRight-6902088a.png" alt=""></div>
+          <div  class="bottomright"><img src="https://s.pinimg.com/webapp/right-2bd1edfc.png" alt=""></div>
+        </div>
+        <div class="searchContent">
+          <p>Search for an idea</p>
+          <div class="explore">
+            What do you want to try next? Think of something you’re into—like “easy chicken dinner”—and see what you find.
+            <br>
+            <button>Explore</button>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="sample" style="height: 100vh;"></div> -->
+    </article>
+    <!-- Script for curosel content -->
+    <script>
+
+      {% comment %} Now For Sign Up Page {% endcomment %}
+      // Define the overlay variable before it's used
+      var display = true
+      if(display){
+
+        var loginoverlay = document.getElementById('loginoverlay')
+        document.getElementById("login").addEventListener("click", function() {
+         var overlay = document.getElementById("loginoverlay");
+         overlay.style.display = "flex";
+     });
+      }
+      else{
+        var loginoverlay = document.getElementById('loginoverlay')
+        loginoverlay.style.display = "none";
+      }
+
+    if (window.location.href.includes( '{% url "user_login" %}')){
+          var overlay = document.getElementById("loginoverlay");
+        overlay.style.display = "flex";
+        }
+      
+
+
+    document.getElementById("cutting-login").addEventListener("click", function() {
+        
+      display = false
+        if (window.location.href.includes( '{% url "user_login" %}')){
+          window.history.back()
+        }
+        else{
+          var overlay = document.getElementById("loginoverlay");
+        overlay.style.display = "none";
+        }
+    });
+
+    document.getElementById("loginButton").addEventListener("click", function() {
+        var form = document.getElementById("loginform");
+        form.submit();
+    }); 
+
+
+        {% comment %} this is for the animations part {% endcomment %}
+      let currentIndex = 0;
+      const slides = document.querySelectorAll(".carousel-slide");
+      const radios = document.querySelectorAll('input[type="radio"]');
+
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          const images = slide.querySelectorAll(".img");
+          if (i === currentIndex) {
+            images.forEach((image) => {
+              image.style.animation = ""; // Reset animation for inactive slides
+              image.style.animationDelay = ""; // Reset animation delay
+            });
+            slide.classList.remove("active");
+          } else {
+            images.forEach((image, i) => {
+              image.style.animation =
+                "images-slide-up 5.5s ease-in-out infinite"; // Apply animation for active slide
+              image.style.animationDelay = `${i * 0.1}s`; // Set animation delay for each  image according to their indecies
+            });
+          }
+        });
+
+        currentIndex = index;
+        if (currentIndex < 0) {
+          currentIndex = slides.length - 1;
+        } else if (currentIndex >= slides.length) {
+          currentIndex = 0;
+        }
+
+        slides[currentIndex].classList.add("active");
+        radios[currentIndex].checked = true;
+      }
+
+      // Function to auto slide
+      function autoSlide() {
+        showSlide(currentIndex + 1);
+      }
+
+      // Set interval for auto slide
+      let interval = setInterval(autoSlide, 5500); // Change slide every 5 seconds
+
+      // Event listeners for radio buttons
+      radios.forEach((radio, index) => {
+        radio.addEventListener("change", () => {
+          clearInterval(interval); // Stop auto sliding
+          showSlide(index); // Show the clicked slide
+          interval = setInterval(autoSlide, 5500); // Resume auto sliding
+        });
+      });
+      {% comment %} let login_errors = document.querySelectorAll(".login_error-message");
+      if (login_errors.length > 0) {
+        loginoverlay.style.display = "flex";
+    } {% endcomment %}
+var overlay = document.getElementById("overlay");
+
+// Check if there are any error messages
+var errors = document.querySelectorAll(".error-message");
+      if (errors.length > 0) {
+        overlay.style.display = "flex";
+    }
+
+      function toggleForm() {
+        var overlay = document.getElementById("overlay");
+
+        overlay.style.display =
+          overlay.style.display === "none" || overlay.style.display === ""
+            ? "flex"
+            : "none";
+      }
+
+      function submitForm() {
+        var form = document.getElementById("registrationForm");
+        form.submit();
+      }
+
+      document.getElementById("cutting").addEventListener("click", function () {
+        var overlay = document.getElementById("overlay");
+        overlay.style.display = "none";
+      });
+      document
+        .getElementById("signupButton")
+        .addEventListener("click", function () {
+          submitForm();
+        }); 
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

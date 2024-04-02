@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to Pinterest</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/home.css" %}">
+    <link rel="shortcut icon" href="{% static "img/favicon.ico" %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/9ab1fedf81.js" crossorigin="anonymous"></script>
+    
+    <style>
+      #boardslist,
+      #createboard {
+        display: none;
+      }
+      
+    </style>
+    
+  </head>
+  <body>
+    <header>
+      <div class="nav-bar">
+      <div><a href=""><img
+                src="{% static "img/Pinterest_Favicon.webp" %}"
+                alt=""
+                width="25px"
+                height="25px"
+                style="border-radius: 50%"
+              /></a></div>
+      <div><a href="">Home</a></div>
+      <div><a href="">Explore</a></div>
+      <div><a href="{% url 'create_pin' %}">Create</a></div>
+      <input type="text" name="" id="" placeholder="Search" />
+      <div><a href=""><i class="fa-solid fa-bell"></i></a></div>
+      <div><a href=""><i class="fa-solid fa-comment-dots"></i></a></div>
+      <div><a href="{% url 'profile' pk=user.id %}">
+        {% if user.user_image and user.user_image.url  %}
+                <img src="{{ user.user_image.url }}" alt="" 
+                width="25px"
+                height="25px"
+                style="border-radius: 50%"
+                >
+                {% else %}
+                <img src="{% static "img/blankimage.jpg" %}" alt=""
+                width="25px"
+                height="25px"
+                style="border-radius: 50%"
+                >
+                {% endif %}
+      </a></div>
+               
+      <div id='toggling'><a href="" ><i class="fas fa-angle-down"></i
+            ></a></div>
+    </div>
+    </header>
+    
+
+    
+    {% csrf_token %} {% if request.user.is_authenticated %}
+    <h1 class='welcome' style="text-align:center;">Welcome to Pinterest, {{ request.user.username }}</h1>
+     {% comment %} <a href="{% url 'create_pin' %}">create_pin</a>
+    <a href="{% url "home_page" %}">home page</a> {% endcomment %}
+    <!-- Button to fetch the create board form -->
+    
+    <div class="displayingboards">
+      <button id="fetchCreateBoardForm">Create Board</button>
+
+    <button id="boarddisplay">Board List</button>
+    </div>
+    {% else %}
+    <p>You are not logged in. Please log in to access your boards.</p>
+    <a href="{% url 'user_login' %}">Login</a>
+    {% endif %}
+
+    <!-- Div to render the create board form -->
+    <div id="createboard">
+
+    </div>
+
+    <div id="boardslist">
+      <h1>Your Boards {{ user }}</h1>
+      <ul>
+        {% for board in boards %}
+        <li>{{ board.name }}</li>
+        <li>{{ board.description }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% comment %} <a href="{% url "log_out" %}">Log out</a> {% endcomment %}
+    {% comment %} <a href="{% url "profile" %}">Profiles</a> {% endcomment %}
+    <div class="sidebar" id="sideone">
+      <p>Currently in</p>
+      <a href="{% url 'profile' pk=user.id %}" class='profilenavigation'>
+            {% if user.user_image and user.user_image.url  %}
+                <img src="{{ user.user_image.url }}" alt="" 
+                width="55px"
+                height="55px"
+                style="border-radius: 50%;object-fit:cover;"
+                >
+                {% else %}
+                <img src="{% static "img/blankimage.jpg" %}" alt=""
+                width="55px"
+                height="55px"
+                style="border-radius: 50%;object-fit:cover;"
+                >
+                {% endif %}
+                <div class='profilenames'>
+                  {{user.username}}
+                  <p>Personal</p>
+                  <p>{{ user.email }}</p>
+                </div>
+            </a>
+      <p>Your accounts</p>
+      <div class="yourAccounts">
+        <button>Add account</button>
+      <button>Convert to bussiness</button>
+      </div>
+      <p>More options</p>
+      <div class="moreOptions">
+        <p>Settings</p>
+        <p>Tune your home feed</p>
+        <p>Install your home feed</p>
+        <p>Install the Chrome app</p>
+        <p>your privacy rights</p>
+        <p>Get help</p>
+        <p>See terms of service</p>
+        <p>See privacy policy</p>
+        <p>Be a beta tester</p>
+        <a href="{% url "log_out" %}">Log out</a>
+      </div>
+    </div>
+    <div class="container"></div>
+     
+    
+    <script>
+      
+      var imagesurl ='{% url 'home_page' %}'; 
+      var boards_url = "{% url 'board_list' %}";
+      var createboardurl = "{% url 'create_board' %}";
+    </script>
+    <script src="{% static 'js/home.js' %}"></script>
+  </body>
+</html>

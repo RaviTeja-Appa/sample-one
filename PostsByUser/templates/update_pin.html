@@ -1,0 +1,9 @@
+<h1>Update Pin</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <img src="{{ pin.image_Post.url }}" alt="Uploaded Image">  <label for="id_image_Post">Update Image (Optional):</label>
+    {{ form.image_Post }}
+    <button type="submit">Update Pin</button>
+</form>

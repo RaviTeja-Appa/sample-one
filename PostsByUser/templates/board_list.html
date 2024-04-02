@@ -1,0 +1,9 @@
+
+<h1>Your Boards {{ user }}</h1>
+<ul>
+  {% for board in boards %}
+  <li>{{ board.name }}</li>
+  <li>{{ board.description }}</li>
+  {% endfor %}
+</ul>
+

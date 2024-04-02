@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/modification.css" %}" />
+    <script
+      src="https://kit.fontawesome.com/9ab1fedf81.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+      <div class="nav-bar">
+      <div><a href="{% url "home" %}"><img
+                src="{% static "img/Pinterest_Favicon.webp" %}"
+                alt=""
+                width="25px"
+                height="25px"
+                style="border-radius: 50%"
+              /></a></div>
+      <div><a href="{% url "home" %}">Home</a></div>
+      <div><a href="">Explore</a></div>
+      <div><a href="{% url "create_pin" %}">Create</a></div>
+      <input type="text" name="" id="" placeholder="Search" />
+      <div><a href=""><i class="fa-solid fa-bell"></i></a></div>
+      <div><a href=""><i class="fa-solid fa-comment-dots"></i></a></div>
+      <div><a href=""><img
+                src="{% static "/img/favicon.ico" %}"
+                alt=""
+                width="25px"
+                height="25px"
+                style="border-radius: 50%"
+              /> </a></div>
+      <div id='toggling'><a href=""><i class="fas fa-angle-down"></i
+            ></a></div>
+    </div>
+
+    <div class="sidebar" id="sideone">
+      <p>Currently in</p>
+      <p>Profile Set</p>
+      <p>Your accounts</p>
+      <div class="yourAccounts">
+        <button>Add account</button>
+      <button>Convert to bussiness</button>
+      </div>
+      <p>More options</p>
+      <div class="moreOptions">
+        <p>Settings</p>
+        <p>Tune your home feed</p>
+        <p>Install your home feed</p>
+        <p>Install the Chrome app</p>
+        <p>your privacy rights</p>
+        <p>Get help</p>
+        <p>See terms of service</p>
+        <p>See privacy policy</p>
+        <p>Be a beta tester</p>
+        <a href="{% url "log_out" %}">Log out</a>
+      </div>
+    </div>
+
+    <div class="conatiner">
+      <a href="{% url "home" %}" id="arrow"><i class="fa-solid fa-arrow-left-long"></i></a>
+      <div class="status">
+        <div class="first">
+          <div class="stats">
+            <p>___</p>
+            <p>Impressions</p>
+          </div>
+          <div class="stats">
+            <p>___</p>
+            <p>Pin clicks</p>
+          </div>
+          <div class="stats">
+            <p>___</p>
+            <p>Saves</p>
+          </div>
+        </div>
+        <div class="lastdiv">
+          <p>Stats are currently unavaildable</p>
+          <p>See more stats</p>
+          <p>icon</p>
+        </div>
+      </div>
+      <div class="set">
+        <div class="img">
+          <img src="{{ post.image_Post.url }}" alt="" />
+        </div>
+        <div class="dataset">
+          <div class="actions">
+            <div>
+              <p><i class="fa-solid fa-arrow-up-from-bracket"></i></p>
+              <p><i class="fa-solid fa-ellipsis"></i></p>
+              <p><i class="fa-regular fa-star"></i></p>
+            </div>
+            <div>
+              <p>boards</p>
+              <p>Save</p>
+            </div>
+          </div>
+          <div class="details">
+            <p>{{ post.title }}</p>
+            <p>{{ post.image_description }}</p>
+          </div>
+          <div class="profile">
+            <div>
+              <p>
+                {% if user.user_image and user.user_image.url  %}
+                <img src="{{ user.user_image.url }}" alt="">
+                {% else %}
+                <img src="{% static "img/blankimage.jpg" %}" alt="">
+                {% endif %}
+              </p>
+              <div>
+                <a href="{% url 'profile' pk=post.user.id %}">
+                  <p>{{user.username}}</p>
+                  <p>{{ followers_count }} Followers</p>
+                </a>
+              </div>
+            </div>
+            <div>
+
+             {% if user != request.user %}
+              {% if is_following %}
+                <button type='submit' class="follow" id='unfollow'>Unfollow</button>
+                <form action="{% url 'unfollowing' following_id=following_id %}" method="post" style='display:none;' id='unfollower'>
+                  {% csrf_token %}
+                </form>
+              {% else %}
+                <button class="follow" id='follow' type='submit'>Follow</button>
+                <form action="{% url 'adding_followers' user_id=user.id %}" method="post" style='display:none;' id='follower'>
+                  {% csrf_token %}
+                </form>
+              {% endif %}
+            {% endif %}
+
+
+            </div>
+          </div>
+          <div class="comment-section">
+            <div>
+              <p>Comments</p>
+              <p id="toggleButton"><i class="fa-solid fa-angle-down"></i></p>
+            </div>
+            <div class="emptybox" id="emptybox"></div>
+            <div class="container1" id="container">
+              
+      {% for comment in comments %}
+      <p class='comment-para'>{{ comment.commented_by }}: {{ comment.comment_text }}</p>
+      {% empty %}
+      <p>No comments yet.</p>
+      {% endfor %}
+            </div>
+          </div>
+          <div class="commenting">
+            <div>
+              <div>
+                <p>{{ comments_count }}</p>
+                <p>comments</p>
+              </div>
+              <div class="likes">
+                <p>{{ likes_count }}</p>
+                <form action="{% url 'like_post' pk=post.pk %}" method="post" style='display:none;' id='likeform'>
+      {% csrf_token %}
+      <button type="submit" class="like-btn">
+        {% if liked %} Unlike {% else %} Like {% endif %}
+      </button>
+    </form>
+    {% if liked %}  <p id='love' style='background-color:rgba(255, 224, 224, 1);color:red;'><i class="fa-regular fa-heart" ></i></p> 
+    {% else %} <p id='love' style='background-color:#e9e9e9;color:#000000;'><i class="fa-regular fa-heart" ></i></p> {% endif %}
+                
+              </div>
+            </div>
+            <div>
+              <p class='profile_image'>
+                {% if requested_user.user_image and requested_user.user_image.url %}
+                <img src="{{ reuested_user.user_image.url }}" alt="">
+                {% else %}
+                <img src="{% static "img/blankimage.jpg" %}" alt="">
+                {% endif %}
+              </p>
+              <div id="maindiv">
+                <form id="commentForm" action="{% url 'add_comment' image_post_id=post.pk %}" method="post">
+                  {% csrf_token %}
+                  <input type="text" placeholder="Add a comment" id="commentholder" name="comment_text">
+                </form>
+                <button type="button" id="send-comment"><i class="fa-solid fa-paper-plane"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <script src="{% static "js/modification.js" %}" defer></script>
+  </body>
+</html>
